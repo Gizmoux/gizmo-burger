@@ -4,14 +4,26 @@ import { theme } from "../../../theme"
 import Main from "./Main/Main"
 import Navbar from "./Navbar/Navbar"
 import OrderContext from "../../../context/OrderContext"
+import { fakeMenu } from "../../../fakeData/fakeMenu"
 
 export default function OrderPage() {
   // state
   const [isModeAdmin, setIsModeAdmin] = useState(true)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [currentTabSelected, setCurrentTabSelected] = useState("add")
+  const [menu, setMenu] = useState(fakeMenu.MEDIUM)
 
   // comportements
+  const handleAdd = (newProduct) => {
+    // 1. copie du tableau
+    const menuCopy = [...menu]
+
+    // 2. manip de la copie du tableau
+    const menuUpdated = [newProduct, ...menuCopy]
+
+    // 3. update du state
+    setMenu(menuUpdated)
+  }
 
   const orderContextValue = {
     isModeAdmin,
@@ -20,6 +32,8 @@ export default function OrderPage() {
     setIsCollapsed,
     currentTabSelected,
     setCurrentTabSelected,
+    menu,
+    handleAdd,
   }
 
   //affichage
