@@ -6,7 +6,7 @@ const EMPTY_PRODUCT = {
   id: "",
   title: "Sam",
   imageSource: "",
-  price: 0,
+  price: 14,
 }
 
 export default function AddForm() {
@@ -29,10 +29,7 @@ export default function AddForm() {
   const handleChange = (event) => {
     const newValue = event.target.value
     const name = event.target.name
-    setNewProduct({
-      ...newProduct,
-      [name]: newValue,
-    })
+    setNewProduct({ ...newProduct, [name]: newValue })
   }
 
   // affichage
