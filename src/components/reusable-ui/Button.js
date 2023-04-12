@@ -1,18 +1,7 @@
 import styled, { css } from "styled-components"
 import { theme } from "../../theme"
 
-type size = "small" | "regular" | "large"
-type state = "clicked" | "focused" | "hovered" | "disabled"
-
-export default function Button({
-  label,
-  Icon,
-  className,
-  version = "normal",
-  onClick,
-  size,
-  state,
-}) {
+export default function Button({ label, Icon, className, version = "normal", onClick }) {
   return (
     <ButtonStyled className={className} version={version} onClick={onClick}>
       <span>{label}</span>
@@ -22,75 +11,68 @@ export default function Button({
 }
 
 const ButtonStyled = styled.button`
-  ${({ version, size }) => getButtonStyle(version, size)};
+  ${({ version }) => extraStyle[version]};
 `
-const getButtonStyle = (version, size) => {
-  if (version === "primary") return getExtraStylePrimary(size, state)
-  if (version === "success") return getExtraStyleSucess(size, state)
-}
 
-const getExtraStylePrimary = (size, state) => {
-  return css`
-    width: 100%;
-    border: 1px solid red;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    position: relative; //is used in case you want to create interactive icons where an icon replaces the text label.
-    white-space: nowrap; //prevents the text label from wrapping to the next line.
-    text-decoration: none; //removes the text decoration in case you’re applying the .btn class to a link.
-    line-height: 1;
+const extraStylePrimary = css`
+  width: 100%;
+  border: 1px solid red;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; //is used in case you want to create interactive icons where an icon replaces the text label.
+  white-space: nowrap; //prevents the text label from wrapping to the next line.
+  text-decoration: none; //removes the text decoration in case you’re applying the .btn class to a link.
+  line-height: 1;
 
-    padding: 18px 24px;
-    border-radius: 5px;
-    font-size: ${sizesOptions[size]};
-    font-weight: 800;
-    color: white;
-    background-color: #ff9f1b;
-    //border: 1px solid #ff9f1b;
-    border: BORDER_COLORS[state]
+  padding: 18px 24px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  background-color: #ff9f1b;
+  border: 1px solid #ff9f1b;
 
+  :hover {
+    color: ${theme.colors.primary};
+    background-color: ${theme.colors.white};
+    border: 1px solid ${theme.colors.primary};
+    transition: all 200ms ease-out;
+  }
+  :active {
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+  }
+
+  &.is-disabled {
+    opacity: 50%;
+    cursor: not-allowed;
+    z-index: 2;
+  }
+
+  &.with-focus {
+    border: 1px solid white;
+    background-color: ${theme.colors.white};
+    color: ${theme.colors.primary};
     :hover {
-      color: ${theme.colors.primary};
-      background-color: ${theme.colors.white};
-      border: 1px solid ${theme.colors.primary};
-      transition: all 200ms ease-out;
+      color: ${theme.colors.white};
+      background-color: ${theme.colors.primary};
+      border: 1px solid ${theme.colors.white};
     }
     :active {
-      background-color: ${theme.colors.primary};
-      color: ${theme.colors.white};
-    }
-
-    &.is-disabled {
-      opacity: 50%;
-      cursor: not-allowed;
-      z-index: 2;
-    }
-
-    &.with-focus {
-      border: 1px solid white;
       background-color: ${theme.colors.white};
       color: ${theme.colors.primary};
-      :hover {
-        color: ${theme.colors.white};
-        background-color: ${theme.colors.primary};
-        border: 1px solid ${theme.colors.white};
-      }
-      :active {
-        background-color: ${theme.colors.white};
-        color: ${theme.colors.primary};
-      }
     }
+  }
 
-    .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  `
-}
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
 
-const getExtraStyleSucess = css`
+const extraStyleSuccess = css`
   cursor: pointer;
   color: ${theme.colors.white};
   background: ${theme.colors.success};
@@ -111,19 +93,6 @@ const getExtraStyleSucess = css`
   }
 `
 const extraStyle = {
-  primary: extraStylePrimary,
-  sucess: extraStyleSuccess,
-}
-
-const sizesOptions = {
-  small: extraStyleSmall,
-  normal: extraStyleNormal,
-  large: extraStyleLarge,
-}
-
-const BORDER_COLORS = {
-  clicked : "grey"
-  enabled: "blue",
-  focused: "white",
-  disabeld: "black",
+  normal: extraStylePrimary,
+  success: extraStyleSuccess,
 }
