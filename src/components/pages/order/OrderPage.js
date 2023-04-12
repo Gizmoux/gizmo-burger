@@ -5,13 +5,15 @@ import Main from "./Main/Main"
 import Navbar from "./Navbar/Navbar"
 import OrderContext from "../../../context/OrderContext"
 import { fakeMenu } from "../../../fakeData/fakeMenu"
+import { EMPTY_PRODUCT } from "./Main/MainRightSide/Admin/AdminPanel/AddForm"
 
 export default function OrderPage() {
   // state
   const [isModeAdmin, setIsModeAdmin] = useState(true)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [currentTabSelected, setCurrentTabSelected] = useState("add")
-  const [menu, setMenu] = useState(fakeMenu.SMALL)
+  const [menu, setMenu] = useState(fakeMenu.MEDIUM)
+  const [newProduct, setNewProduct] = useState(EMPTY_PRODUCT)
 
   // comportements
   const handleAdd = (newProduct) => {
@@ -52,6 +54,8 @@ export default function OrderPage() {
     handleAdd,
     handleDelete,
     resetMenu,
+    newProduct,
+    setNewProduct,
   }
 
   //affichage
