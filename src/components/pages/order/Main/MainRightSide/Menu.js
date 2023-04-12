@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import styled from "styled-components"
 import OrderContext from "../../../../../context/OrderContext"
+import { fakeMenu } from "../../../../../fakeData/fakeMenu"
 import { theme } from "../../../../../theme"
 import { formatPrice } from "../../../../../utils/maths"
 import Card from "../../../../reusable-ui/Card"
@@ -8,12 +9,21 @@ import Card from "../../../../reusable-ui/Card"
 const IMAGE_BY_DEFAULT = "/images/coming-soon.png"
 
 export default function Menu() {
+  const { menu, isModeAdmin, handleDelete, resetMenu } = useContext(OrderContext)
   // state
-  const { menu, isModeAdmin, handleDelete } = useContext(OrderContext)
 
   // comportements
 
   // affichage
+
+  if (menu.length === 0)
+    return (
+      <div>
+        <span>Pas de produit</span>
+        <button onClick={resetMenu}>Générer de nouveaux produits</button>
+      </div>
+    )
+
   return (
     <MenuStyled className="menu">
       {menu.map(({ id, title, imageSource, price }) => {
