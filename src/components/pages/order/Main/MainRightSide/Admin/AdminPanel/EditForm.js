@@ -1,22 +1,25 @@
-import { useContext, useState } from "react";
-import HintMessage from "./HintMessage";
+import { useContext } from "react";
 import OrderContext from "../../../../../../../context/OrderContext";
 import styled from "styled-components";
 import ImagePreview from "./ImagePreview";
 import Button from "../../../../../../reusable-ui/Button";
 import { getInputTextsConfig } from "./inputTextConfig";
 import TextInput from "../../../../../../reusable-ui/TextInput";
-import { EMPTY_PRODUCT } from "../../../../../../../enums/product";
 
 export default function EditForm() {
-  const { ProductSelected } = useContext(OrderContext);
+  const { ProductSelected, setProductSelected, handleEdit } =
+    useContext(OrderContext);
 
   const inputTexts = getInputTextsConfig(ProductSelected);
-  const [productBeingEdited, setProductBeingEdited] = useState(EMPTY_PRODUCT);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setProductBeingEdited({ ...productBeingEdited, [name]: value });
+    const productBeingUpdated = {
+      ...ProductSelected,
+      [name]: value,
+    };
+    setProductSelected(productBeingUpdated);
+    handleEdit(productBeingUpdated);
   };
 
   return (
