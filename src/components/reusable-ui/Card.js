@@ -1,13 +1,24 @@
-import styled from "styled-components"
-import { theme } from "../../theme"
-import Button from "./Button"
-import { TiDelete } from "react-icons/ti"
+import styled from "styled-components";
+import { theme } from "../../theme";
+import Button from "./Button";
+import { TiDelete } from "react-icons/ti";
 
-export default function Card({ title, imageSource, leftDescription, hasDeleteButton, onDelete }) {
+export default function Card({
+  title,
+  imageSource,
+  leftDescription,
+  hasDeleteButton,
+  onDelete,
+  onClick,
+}) {
   return (
-    <CardStyled className="produit">
+    <CardStyled className="produit" onClick={onClick}>
       {hasDeleteButton && (
-        <button className="delete-button" aria-label="delete-button" onClick={onDelete}>
+        <button
+          className="delete-button"
+          aria-label="delete-button"
+          onClick={onDelete}
+        >
           <TiDelete className="icon" />
         </button>
       )}
@@ -25,7 +36,7 @@ export default function Card({ title, imageSource, leftDescription, hasDeleteBut
         </div>
       </div>
     </CardStyled>
-  )
+  );
 }
 
 const CardStyled = styled.div`
@@ -132,4 +143,4 @@ const CardStyled = styled.div`
       }
     }
   }
-`
+`;

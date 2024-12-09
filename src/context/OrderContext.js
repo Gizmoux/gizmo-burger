@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext } from "react";
 
 export default createContext({
   isModeAdmin: false,
@@ -15,6 +15,9 @@ export default createContext({
   handleDelete: () => {},
   resetMenu: () => {},
 
-  newProduct: [],
+  newProduct: {},
   setNewProduct: () => {},
-})
+
+  ProductSelected: {},
+  setProductSelected: () => {},
+});

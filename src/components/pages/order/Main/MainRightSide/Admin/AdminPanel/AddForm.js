@@ -1,60 +1,62 @@
-import { useContext, useState } from "react"
-import styled from "styled-components"
-import OrderContext from "../../../../../../../context/OrderContext"
+import { useContext, useState } from "react";
+import styled from "styled-components";
+import OrderContext from "../../../../../../../context/OrderContext";
 
-import TextInput from "../../../../../../reusable-ui/TextInput"
-import Button from "../../../../../../reusable-ui/Button"
-import ImagePreview from "./ImagePreview"
-import SubmitMessage from "./SubmitMessage"
-import { getInputTextsConfig } from "./inputTextConfig"
-
-export const EMPTY_PRODUCT = {
-  id: "",
-  title: "",
-  imageSource: "",
-  price: 0,
-}
+import TextInput from "../../../../../../reusable-ui/TextInput";
+import Button from "../../../../../../reusable-ui/Button";
+import ImagePreview from "./ImagePreview";
+import SubmitMessage from "./SubmitMessage";
+import { getInputTextsConfig } from "./inputTextConfig";
+import { EMPTY_PRODUCT } from "../../../../../../../enums/product";
 
 export default function AddForm() {
   // state
-  const { handleAdd, newProduct, setNewProduct } = useContext(OrderContext)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const { handleAdd, newProduct, setNewProduct } = useContext(OrderContext);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // comportements
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const newProductToAdd = {
       ...newProduct,
       id: crypto.randomUUID(),
-    }
+    };
 
-    handleAdd(newProductToAdd)
-    setNewProduct(EMPTY_PRODUCT)
+    handleAdd(newProductToAdd);
+    setNewProduct(EMPTY_PRODUCT);
 
-    displaySuccessMessage()
-  }
+    displaySuccessMessage();
+  };
 
   const handleChange = (event) => {
-    const { name, value } = event.target
-    setNewProduct({ ...newProduct, [name]: value })
-  }
+    const { name, value } = event.target;
+    setNewProduct({ ...newProduct, [name]: value });
+  };
 
   const displaySuccessMessage = () => {
-    setIsSubmitted(true)
+    setIsSubmitted(true);
     setTimeout(() => {
-      setIsSubmitted(false)
-    }, 2000)
-  }
+      setIsSubmitted(false);
+    }, 2000);
+  };
 
-  const inputTexts = getInputTextsConfig(newProduct)
+  const inputTexts = getInputTextsConfig(newProduct);
 
   // affichage
   return (
     <AddFormStyled onSubmit={handleSubmit}>
-      <ImagePreview imageSource={newProduct.imageSource} title={newProduct.title} />
+      <ImagePreview
+        imageSource={newProduct.imageSource}
+        title={newProduct.title}
+      />
       <div className="input-fields">
         {inputTexts.map((input) => (
-          <TextInput {...input} key={input.id} onChange={handleChange} version="minimalist" />
+          <TextInput
+            {...input}
+            key={input.id}
+            onChange={handleChange}
+            version="minimalist"
+          />
         ))}
       </div>
       <div className="submit">
@@ -66,7 +68,7 @@ export default function AddForm() {
         {isSubmitted && <SubmitMessage />}
       </div>
     </AddFormStyled>
-  )
+  );
 }
 
 const AddFormStyled = styled.form`
@@ -100,4 +102,4 @@ const AddFormStyled = styled.form`
       height: 100%;
     }
   }
-`
+`;

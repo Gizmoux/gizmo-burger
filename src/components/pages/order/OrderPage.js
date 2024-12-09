@@ -1,47 +1,49 @@
-import { useState } from "react"
-import styled from "styled-components"
-import { theme } from "../../../theme"
-import Main from "./Main/Main"
-import Navbar from "./Navbar/Navbar"
-import OrderContext from "../../../context/OrderContext"
-import { fakeMenu } from "../../../fakeData/fakeMenu"
-import { EMPTY_PRODUCT } from "./Main/MainRightSide/Admin/AdminPanel/AddForm"
-
+import { useState } from "react";
+import styled from "styled-components";
+import { theme } from "../../../theme";
+import Main from "./Main/Main";
+import Navbar from "./Navbar/Navbar";
+import OrderContext from "../../../context/OrderContext";
+import { fakeMenu } from "../../../fakeData/fakeMenu";
+import { EMPTY_PRODUCT } from "../../../enums/product";
 export default function OrderPage() {
   // state
-  const [isModeAdmin, setIsModeAdmin] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const [currentTabSelected, setCurrentTabSelected] = useState("add")
-  const [menu, setMenu] = useState(fakeMenu.MEDIUM)
-  const [newProduct, setNewProduct] = useState(EMPTY_PRODUCT)
+  const [isModeAdmin, setIsModeAdmin] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [currentTabSelected, setCurrentTabSelected] = useState("add");
+  const [menu, setMenu] = useState(fakeMenu.MEDIUM);
+  const [newProduct, setNewProduct] = useState(EMPTY_PRODUCT);
+  const [ProductSelected, setProductSelected] = useState(EMPTY_PRODUCT);
 
   // comportements
   const handleAdd = (newProduct) => {
     // 1. copie du tableau
-    const menuCopy = [...menu]
+    const menuCopy = [...menu];
 
     // 2. manip de la copie du tableau
-    const menuUpdated = [newProduct, ...menuCopy]
+    const menuUpdated = [newProduct, ...menuCopy];
 
     // 3. update du state
-    setMenu(menuUpdated)
-  }
+    setMenu(menuUpdated);
+  };
 
   const handleDelete = (idOfProductToDelete) => {
     //1. copy du state
-    const menuCopy = [...menu]
+    const menuCopy = [...menu];
 
     //2. manip de la copie state
-    const menuUpdated = menuCopy.filter((product) => product.id !== idOfProductToDelete)
-    console.log("menuUpdated: ", menuUpdated)
+    const menuUpdated = menuCopy.filter(
+      (product) => product.id !== idOfProductToDelete
+    );
+    console.log("menuUpdated: ", menuUpdated);
 
     //3. update du state
-    setMenu(menuUpdated)
-  }
+    setMenu(menuUpdated);
+  };
 
   const resetMenu = () => {
-    setMenu(fakeMenu.MEDIUM)
-  }
+    setMenu(fakeMenu.MEDIUM);
+  };
 
   const orderContextValue = {
     isModeAdmin,
@@ -56,7 +58,9 @@ export default function OrderPage() {
     resetMenu,
     newProduct,
     setNewProduct,
-  }
+    ProductSelected,
+    setProductSelected,
+  };
 
   //affichage
   return (
@@ -68,7 +72,7 @@ export default function OrderPage() {
         </div>
       </OrderPageStyled>
     </OrderContext.Provider>
-  )
+  );
 }
 
 const OrderPageStyled = styled.div`
@@ -86,4 +90,4 @@ const OrderPageStyled = styled.div`
     flex-direction: column;
     border-radius: ${theme.borderRadius.extraRound};
   }
-`
+`;
